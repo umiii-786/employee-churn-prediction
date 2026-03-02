@@ -3,5 +3,8 @@ stages:
     cmd: python -m src.data.data_ingestion
     deps:
     - src/data/data_ingestion.py
+    params:
+    - data_ingestion.test_size
     outs:
     - data/raw
+

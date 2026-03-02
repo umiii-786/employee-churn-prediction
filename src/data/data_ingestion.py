@@ -72,7 +72,7 @@ def main() -> None:
         df = load_data(data_name, path)
         test_size = load_yaml(yaml_path)
 
-        logger.debug("Splitting dataset into train and test...")
+        logger.debug(f"Splitting dataset into train and test... with {test_size} percentage")
         train_ds, test_ds = train_test_split(
             df, test_size=test_size, random_state=4
         )
