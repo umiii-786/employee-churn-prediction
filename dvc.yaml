@@ -8,3 +8,10 @@ stages:
     outs:
     - data/raw
 
+  handled_outlier:
+    cmd: python -m src.data.handle_outlier
+    deps:
+    - data/raw
+    - src/data/handle_outlier.py
+    outs:
+    - data/interim
