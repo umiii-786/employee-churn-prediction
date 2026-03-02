@@ -34,3 +34,9 @@ stages:
     - model_parameters.n_estimators
     outs:
     - models/rf_model.pkl
+  model_evaluation:
+    cmd: python -m src.model.test_model
+    deps:
+    - data/processed
+    - models/
+    - src/model/test_model.py
