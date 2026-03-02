@@ -5,7 +5,7 @@ from src.logging_config import logger
 
 def load_data(path: str) -> tuple:
     try:
-        logger.info(f"Loading datasets from {path} ...")
+        logger.debug(f"Loading datasets from {path} ...")
 
         train_path = os.path.join(path, 'train.csv')
         test_path = os.path.join(path, 'test.csv')
@@ -13,8 +13,8 @@ def load_data(path: str) -> tuple:
         train_ds = pd.read_csv(train_path)
         test_ds = pd.read_csv(test_path)
 
-        logger.info(f"Train shape: {train_ds.shape}")
-        logger.info(f"Test shape: {test_ds.shape}")
+        logger.debug(f"Train shape: {train_ds.shape}")
+        logger.debug(f"Test shape: {test_ds.shape}")
 
         return train_ds, test_ds
 
@@ -48,7 +48,7 @@ def replace_outliers_q1_q3(group):
 
 def save_data(train_ds: pd.DataFrame, test_ds: pd.DataFrame, save_path: str) -> None:
     try:
-        logger.info("Saving processed datasets after outlier handling...")
+        logger.debug("Saving processed datasets after outlier handling...")
 
         os.makedirs(save_path, exist_ok=True)
 
@@ -58,7 +58,7 @@ def save_data(train_ds: pd.DataFrame, test_ds: pd.DataFrame, save_path: str) -> 
         train_ds.to_csv(train_path, index=False)
         test_ds.to_csv(test_path, index=False)
 
-        logger.info(f"Datasets saved successfully at {save_path}")
+        logger.debug(f"Datasets saved successfully at {save_path}")
 
     except Exception as e:
         logger.error(f"Error while saving datasets: {e}")
@@ -67,14 +67,14 @@ def save_data(train_ds: pd.DataFrame, test_ds: pd.DataFrame, save_path: str) -> 
 
 def main():
     try:
-        logger.info("Outlier Handling Pipeline Started...")
+        logger.debug("Outlier Handling Pipeline Started...")
 
         load_path = 'data/raw'
         save_path = 'data/interim'
 
         train_ds, test_ds = load_data(load_path)
 
-        logger.info("Applying group-wise IQR outlier treatment...")
+        logger.debug("Applying group-wise IQR outlier treatment...")
 
         train_ds = (
             train_ds
@@ -82,11 +82,11 @@ def main():
             .apply(replace_outliers_q1_q3)
         )
 
-        logger.info("Outlier handling completed.")
+        logger.debug("Outlier handling completed.")
 
         save_data(train_ds, test_ds, save_path)
 
-        logger.info("Outlier Handling Pipeline Completed Successfully.")
+        logger.debug("Outlier Handling Pipeline Completed Successfully.")
 
     except Exception as e:
         logger.error(f"Pipeline failed due to: {e}")

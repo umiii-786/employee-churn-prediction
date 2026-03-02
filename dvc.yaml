@@ -15,3 +15,10 @@ stages:
     - src/data/handle_outlier.py
     outs:
     - data/interim
+  feature_transformed:
+    cmd: python -m src.features.feature_transform
+    deps:
+    - data/interim
+    - src/features/feature_transform.py
+    outs:
+    - data/processed

@@ -26,11 +26,29 @@ stages:
       nfiles: 2
     - path: src/data/handle_outlier.py
       hash: md5
-      md5: 30e3c6b6ecb3e368cefb8f40dd742cb1
-      size: 2666
+      md5: de534292ea89827ee597f24db2886e2b
+      size: 2675
     outs:
     - path: data/interim
       hash: md5
       md5: 343c163da41d2c6fca48998691e385f7.dir
       size: 755021
+      nfiles: 2
+  feature_transformed:
+    cmd: python -m src.features.feature_transform
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: 343c163da41d2c6fca48998691e385f7.dir
+      size: 755021
+      nfiles: 2
+    - path: src/features/feature_transform.py
+      hash: md5
+      md5: 70709fbdbd388ad763b97ae18be2bf7d
+      size: 4135
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: cad6cea0167b7e5fe00a2cebf390cd89.dir
+      size: 2950078
       nfiles: 2

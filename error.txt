@@ -1,0 +1,2 @@
+2026-03-02 15:44:54,256 - ERROR - Error during feature transformation: could not convert string to float: 'sales'
+2026-03-02 15:44:54,257 - CRITICAL - Pipeline failed in Feature Transformation stage: could not convert string to float: 'sales'
