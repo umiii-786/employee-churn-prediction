@@ -22,3 +22,15 @@ stages:
     - src/features/feature_transform.py
     outs:
     - data/processed
+  model_training:
+    cmd: python -m src.model.train_model
+    deps:
+    - data/processed
+    - src/model/train_model.py
+    params:
+    - model_parameters.max_depth
+    - model_parameters.max_features
+    - model_parameters.min_samples_leaf
+    - model_parameters.n_estimators
+    outs:
+    - models/rf_model.pkl

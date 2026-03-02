@@ -1,2 +1,8 @@
 data_ingestion:
   test_size: 0.25
+
+model_parameters:
+  max_depth: 3
+  max_features: sqrt
+  min_samples_leaf: 2
+  n_estimators: 150
