@@ -7,7 +7,6 @@ stages:
     - data_ingestion.test_size
     outs:
     - data/raw
-
   handled_outlier:
     cmd: python -m src.data.handle_outlier
     deps:
@@ -47,3 +46,4 @@ stages:
     deps:
     - reports/
     - src/model/register_model.py
+
