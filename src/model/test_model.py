@@ -118,7 +118,12 @@ def testModel(model: RandomForestClassifier,
             mlflow.log_params(parameters)
 
             # Model logging
-            mlflow.sklearn.log_model(model, "rf_model")
+            logged_model = mlflow.sklearn.log_model(
+                sk_model=model,
+                artifact_path="model"
+            )
+
+            model_id = logged_model.model_id
 
             # Log transformer artifact if exists
             if os.path.exists('models/column_transformer.pkl'):
@@ -126,17 +131,18 @@ def testModel(model: RandomForestClassifier,
 
         logger.debug("Model evaluation completed successfully.")
         run_id=run.info.run_id
-        return run_id
+        return run_id,model_id
     except Exception as e:
         logger.error(f"Error during model evaluation: {e}")
         raise
 
-def save_run_debug(runid,model,run_path):
+def save_run_info(runid,modelid,run_path):
     try:
         logger.debug("Saving Run Info...")
+        os.makedirs('reports',exist_ok=True)
         data = {
             'run_id':runid,
-            "model":model
+            "model_id":modelid
         }
 
         with open(run_path, "w") as file:
@@ -161,9 +167,9 @@ def main() -> None:
         train_ds, test_ds = load_data(load_path)
         parameters = load_yaml('params.yaml')
 
-        run_id=testModel(model, parameters, train_ds, test_ds)
+        run_id,model_id=testModel(model, parameters, train_ds, test_ds)
         run_path=os.path.join('reports', 'RunInfo.json')
-        save_run_debug(run_id,'model',run_path)
+        save_run_info(run_id,model_id,run_path)
 
         logger.debug("Model Evaluation Stage Completed Successfully.")
 

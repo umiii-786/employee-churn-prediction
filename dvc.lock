@@ -90,5 +90,23 @@ stages:
       nfiles: 3
     - path: src/model/test_model.py
       hash: md5
-      md5: 34ecba0176fcf2ab57670dc1925ba66c
-      size: 5216
+      md5: d60ade1d427a783198a14320a320f5ed
+      size: 5418
+    outs:
+    - path: reports
+      hash: md5
+      md5: f6db0034fa561d7c30af59c9d59490e2.dir
+      size: 109
+      nfiles: 1
+  register_model:
+    cmd: python -m src.model.register_model
+    deps:
+    - path: reports/
+      hash: md5
+      md5: f6db0034fa561d7c30af59c9d59490e2.dir
+      size: 109
+      nfiles: 1
+    - path: src/model/register_model.py
+      hash: md5
+      md5: 6a32bd9cc555db2e9325079110b3d58d
+      size: 2502
