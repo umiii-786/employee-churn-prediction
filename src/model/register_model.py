@@ -5,7 +5,8 @@ import json
 import os
 import dagshub
 
-dagshub.init(repo_owner='umiii-786', repo_name='employee-churn-prediction',mlflow=True)
+# dagshub.init(repo_owner='umiii-786', repo_name='employee-churn-prediction',mlflow=True)
+dagshub.auth.add_app_token(os.environ["DAGSHUB_PAT"])
 mlflow.set_tracking_uri('https://dagshub.com/umiii-786/employee-churn-prediction.mlflow')
 client = MlflowClient()
 

@@ -10,7 +10,8 @@ from src.logging_config import logger
 import json
 
 # DAGSHUB + MLFLOW CONFIG
-dagshub.init(repo_owner='umiii-786', repo_name='employee-churn-prediction',mlflow=True)
+dagshub.auth.add_app_token(os.environ["DAGSHUB_PAT"])
+# dagshub.init(repo_owner='umiii-786', repo_name='employee-churn-prediction',mlflow=True)
 mlflow.set_tracking_uri('https://dagshub.com/umiii-786/employee-churn-prediction.mlflow')
 
 mlflow.set_experiment('Pipeline_RF_Model')
