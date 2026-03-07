@@ -6,7 +6,7 @@ import os
 # from sklearn.metrics import accuracy_score
 
 # Model URIs
-CANDIDATE_MODEL_URI = "models:/Churn_Model_With_RF@candidate"
+CANDIDATE_MODEL_URI = "models:/Churn_Model_With_RF@champion"
 PRODUCTION_MODEL_URI = "models:/Churn_Model_With_RF@production"
 
 
