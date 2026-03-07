@@ -17,9 +17,7 @@ os.environ['MLFLOW_TRACKING_USERNAME']=dagshub_pat
 os.environ['MLFLOW_TRACKING_PASSWORD']=dagshub_pat 
 
 mlflow.set_tracking_uri('https://dagshub.com/umiii-786/employee-churn-prediction.mlflow')
-
 mlflow.set_experiment('Pipeline_RF_Model')
-
 
 def load_model(path: str) -> RandomForestClassifier:
     try:

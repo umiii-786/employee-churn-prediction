@@ -5,11 +5,10 @@ import json
 import os
 import dagshub
 
-# dagshub.init(repo_owner='umiii-786', repo_name='employee-churn-prediction',mlflow=True)
-
 dagshub_pat=os.getenv("DAGSHUB_PAT")
 if not dagshub_pat:
     raise EnvironmentError('DAGSHUB_PAT environment variable is not setted ') 
+
 os.environ['MLFLOW_TRACKING_USERNAME']=dagshub_pat 
 os.environ['MLFLOW_TRACKING_PASSWORD']=dagshub_pat 
 
@@ -54,10 +53,10 @@ def register_model(model_name: str, run_info: dict) -> None:
             f"Model registered successfully. Version: {model_version.version}"
         )
 
-        client.transition_model_version_stage(
+        client.set_registered_model_alias(
             name=model_name,
-            version=model_version.version,   # FIXED: dynamic version
-            stage="Production"
+            alias="champion",
+            version=model_version
         )
 
         logger.debug(
