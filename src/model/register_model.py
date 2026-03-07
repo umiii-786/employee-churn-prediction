@@ -6,7 +6,13 @@ import os
 import dagshub
 
 # dagshub.init(repo_owner='umiii-786', repo_name='employee-churn-prediction',mlflow=True)
-dagshub.auth.add_app_token(os.environ["DAGSHUB_PAT"])
+
+dagshub_pat=os.getenv("DAGSHUB_PAT")
+if not dagshub_pat:
+    raise EnvironmentError('DAGSHUB_PAT environment variable is not setted ') 
+os.environ['MLFLOW_TRACKING_USERNAME']=dagshub_pat 
+os.environ['MLFLOW_TRACKING_PASSWORD']=dagshub_pat 
+
 mlflow.set_tracking_uri('https://dagshub.com/umiii-786/employee-churn-prediction.mlflow')
 client = MlflowClient()
 
