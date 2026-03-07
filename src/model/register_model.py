@@ -56,7 +56,7 @@ def register_model(model_name: str, run_info: dict) -> None:
         client.set_registered_model_alias(
             name=model_name,
             alias="champion",
-            version=int(model_version)
+            version=int(model_version.version)
         )
 
         logger.debug(
