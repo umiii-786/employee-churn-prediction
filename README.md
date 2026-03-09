@@ -220,7 +220,7 @@ dvc repro
 Clone this Repo For interacting with Model:
 
 ```bash  
-git clone https://github.com/umiii-786/employee-churn-prediction.git
+git clone https://github.com/umiii-786/employee-churn-fastApi-app
 ```
 
 # 🛠️ Tech Stack

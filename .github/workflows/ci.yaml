@@ -39,10 +39,18 @@ jobs:
         python -m unittest testing/testing_model.py
 
     - name: register-model
+      if: success()
       env:
         DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
       run: | 
         python -m scripts.register_model
+    
+    - name: build image
+    - run: |
+        docker build -t umiii908/churn-prediction .
+      
+      
+  
 
     
 
