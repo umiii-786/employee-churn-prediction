@@ -36,7 +36,7 @@ jobs:
 
     - name: test model
       run: |
-        python -m unittest tests/test_model.py
+        python -m unittest testing/test_model.py
 
     # - name: promote-model
     #   env:
