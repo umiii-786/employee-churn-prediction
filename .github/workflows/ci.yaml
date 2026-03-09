@@ -46,7 +46,7 @@ jobs:
         python -m scripts.register_model
     
     - name: build image
-    - run: |
+      run: |
         docker build -t umiii908/churn-prediction .
       
       
