@@ -36,7 +36,7 @@ jobs:
 
     - name: test model
       run: |
-        python -m unittest testing/testing_model
+        python -m unittest testing/testing_model.py
 
     # - name: register-model
     #   env:
