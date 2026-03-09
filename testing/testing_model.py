@@ -1,53 +1,72 @@
 import unittest
-import mlflow
-from src.logging_config import logger
-import os
-# import pandas as pd
-# from sklearn.metrics import accuracy_score
-
-# Model URIs
-CANDIDATE_MODEL_URI = "models:/Churn_Model_With_RF@champion"
-PRODUCTION_MODEL_URI = "models:/Churn_Model_With_RF@production"
+import pickle
+import pandas as pd
+from sklearn.metrics import accuracy_score
 
 
 class TestModelPipeline(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
+
+    def test_1_load_model_and_transformer(self):
+        """Test whether model and transformer load successfully"""
 
         try:
-            logger.debug("Connecting to DagsHub MLflow tracking server on Testing File...")
+            with open("models/model.pkl", "rb") as f:
+                model = pickle.load(f)
 
-            dagshub_pat = os.getenv("DAGSHUB_PAT")
-            if not dagshub_pat:
-                raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
-
-            os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_pat
-            os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_pat
-
-            mlflow.set_tracking_uri(
-                "https://dagshub.com/umiii-786/employee-churn-prediction.mlflow"
-            )
-
-            mlflow.set_experiment("Pipeline_RF_Model")
-
-            logger.debug("Successfully connected to DagsHub MLflow.")
+            with open("models/column_transformer.pkl", "rb") as f:
+                transformer = pickle.load(f)
 
         except Exception as e:
-            logger.error("Failed to connect to DagsHub MLflow tracking server.")
-            raise
+            self.fail(f"Loading model or transformer failed: {e}")
 
-        
-    def test_1_candidate_model_load(self):
-        """Step 1: Test candidate model can load from MLflow."""
+        self.assertIsNotNone(model)
+        self.assertIsNotNone(transformer)
+
+
+    def test_2_load_holdout_data(self):
+        """Test loading of holdout dataset"""
+
         try:
-            logger.info("Loading candidate model...")
-            self.candidate_model = mlflow.pyfunc.load_model(CANDIDATE_MODEL_URI)
-
+            data = pd.read_csv("data/interim/test.csv")
         except Exception as e:
-            logger.error("Failed to load candidate model.", exc_info=True)
-            self.fail(f"Candidate model failed to load: {e}")
+            self.fail(f"Loading holdout dataset failed: {e}")
 
-        self.assertIsNotNone(self.candidate_model, "Candidate model is None after loading.")
+        self.assertGreater(len(data), 0, "Holdout dataset is empty")
+        self.assertIn("target", data.columns, "Target column missing in dataset")
+
+
+    def test_3_model_performance(self):
+        """Test if model accuracy is >= 70%"""
+
+        # Load model and transformer
+        with open("artifacts/model.pkl", "rb") as f:
+            model = pickle.load(f)
+
+        with open("artifacts/transformer.pkl", "rb") as f:
+            transformer = pickle.load(f)
+
+        # Load holdout data
+        data = pd.read_csv("data/test.csv")
+
+        X = data.drop("Churn", axis=1)
+        y = data["Churn"]
+
+        # Transform features
+        X_transformed = transformer.transform(X)
+
+        # Predict
+        predictions = model.predict(X_transformed)
+
+        # Evaluate
+        accuracy = accuracy_score(y, predictions)
+
+        print(f"\nModel Accuracy: {accuracy}")
+
+        self.assertGreaterEqual(
+            accuracy,
+            0.70,
+            f"Model accuracy {accuracy} is below 70%"
+        )
 
 
 if __name__ == "__main__":

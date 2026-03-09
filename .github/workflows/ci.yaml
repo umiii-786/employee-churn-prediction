@@ -34,11 +34,15 @@ jobs:
       run: | 
         dvc repro
 
-    - name: promote-model
-      env:
-        DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-      run: | 
-        python -m scripts.promote_model
+    - name: test model
+      run: |
+        python -m unittest tests/test_model.py
+
+    # - name: promote-model
+    #   env:
+    #     DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+    #   run: | 
+    #     python -m scripts.promote_model
 
     
 

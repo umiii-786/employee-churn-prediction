@@ -41,9 +41,9 @@ stages:
     - src/model/test_model.py
     outs:
     - reports
-  register_model:
-    cmd: python -m src.model.register_model
-    deps:
-    - reports/
-    - src/model/register_model.py
+  # register_model:
+  #   cmd: python -m src.model.register_model
+  #   deps:
+  #   - reports/
+  #   - src/model/register_model.py
 
