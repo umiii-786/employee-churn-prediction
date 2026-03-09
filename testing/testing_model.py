@@ -39,10 +39,10 @@ class TestModelPipeline(unittest.TestCase):
         """Test if model accuracy is >= 70%"""
 
         # Load model and transformer
-        with open("artifacts/model.pkl", "rb") as f:
+        with open("models/rf_model.pkl", "rb") as f:
             model = pickle.load(f)
 
-        with open("artifacts/transformer.pkl", "rb") as f:
+        with open("models/column_transformer.pkl", "rb") as f:
             transformer = pickle.load(f)
 
         # Load holdout data
