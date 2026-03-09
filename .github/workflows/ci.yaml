@@ -38,11 +38,11 @@ jobs:
       run: |
         python -m unittest testing/testing_model.py
 
-    # - name: register-model
-    #   env:
-    #     DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
-    #   run: | 
-    #     python -m scripts.register_model
+    - name: register-model
+      env:
+        DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+      run: | 
+        python -m scripts.register_model.py
 
     
 
