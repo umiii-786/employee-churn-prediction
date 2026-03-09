@@ -36,13 +36,13 @@ jobs:
 
     - name: test model
       run: |
-        python -m unittest testing/test_model.py
+        python -m unittest testing/test_model
 
-    # - name: promote-model
+    # - name: register-model
     #   env:
     #     DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
     #   run: | 
-    #     python -m scripts.promote_model
+    #     python -m scripts.register_model
 
     
 
