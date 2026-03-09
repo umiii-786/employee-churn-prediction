@@ -10,10 +10,10 @@ class TestModelPipeline(unittest.TestCase):
         """Test whether model and transformer load successfully"""
 
         try:
-            with open("models/model.pkl", "rb") as f:
+            with open("./models/model.pkl", "rb") as f:
                 model = pickle.load(f)
 
-            with open("models/column_transformer.pkl", "rb") as f:
+            with open("./models/column_transformer.pkl", "rb") as f:
                 transformer = pickle.load(f)
 
         except Exception as e:
@@ -46,7 +46,7 @@ class TestModelPipeline(unittest.TestCase):
             transformer = pickle.load(f)
 
         # Load holdout data
-        data = pd.read_csv("data/test.csv")
+        data = pd.read_csv("data/interim/test.csv")
 
         X = data.drop("Churn", axis=1)
         y = data["Churn"]
