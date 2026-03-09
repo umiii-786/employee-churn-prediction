@@ -42,7 +42,7 @@ jobs:
       env:
         DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
       run: | 
-        python -m scripts.register_model.py
+        python -m scripts.register_model
 
     
 
